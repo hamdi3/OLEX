@@ -1,9 +1,3 @@
-import Login from './LoginPage';
-import Home from './HomePage';
-import Register from './RegisterPage';
-import Error from './ErrorPage';
-import About from './AboutPage';
-
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -16,22 +10,21 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Paper } from '@mui/material';
+
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+
 export {
-  Login,
-  Home,
-  Register,
-  Error,
-  About,
   Button,
   CssBaseline,
   TextField,
+  Typography,
   FormControlLabel,
   Checkbox,
   Link,
   Grid,
   Box,
   LockOutlinedIcon,
-  Typography,
   Container,
   Paper,
 };
