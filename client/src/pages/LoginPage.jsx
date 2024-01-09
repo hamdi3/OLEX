@@ -1,18 +1,25 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { ImageOutlined } from '@mui/icons-material';
+import {
+  Button,
+  CssBaseline,
+  TextField,
+  Typography,
+  FormLabel,
+  FormControlLabel,
+  FormControl,
+  Link,
+  Grid,
+  Box,
+  Paper,
+  Radio,
+  RadioGroup,
+  Checkbox,
+} from '../mui';
 import { useState } from 'react';
+import axios from 'axios';
+import { useAuth } from '../context/AuthContext ';
 function Copyright(props) {
   return (
     <Typography
@@ -32,12 +39,15 @@ function Copyright(props) {
 }
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { accessToken, refreshToken, storeTokens, clearTokens } = useAuth();
+
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: '',
   });
   const [errors, setErrors] = useState({
-    email: '',
+    username: '',
     password: '',
   });
   const handleInputChange = (e) => {
@@ -55,11 +65,11 @@ const LoginPage = () => {
 
     // Basic validation rules
 
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Invalid email address';
+    if (formData.username.trim() === '') {
+      newErrors.username = 'Username is required';
       valid = false;
     } else {
-      newErrors.email = '';
+      newErrors.username = '';
     }
 
     if (formData.password.trim() === '') {
@@ -72,14 +82,31 @@ const LoginPage = () => {
     setErrors(newErrors); // Update errors
     return valid;
   };
-  const handleInputSubmit = (event) => {
+  const handleInputSubmit = async (event) => {
     event.preventDefault();
     const isValid = validateInputs();
 
     if (isValid) {
-      console.log(formData); // Proceed with form submission or other actions
-    } else {
-      console.log('');
+      try {
+        const res = await axios.post(
+          'http://127.0.0.1:8000/users_api/login/',
+          { ...formData },
+          {
+            headers: {
+              'Content-Type': 'application/json', // Ensure this aligns with allowed headers
+            },
+          }
+        );
+        console.log(res.data, 'res');
+
+        const { access_token, refresh_token, user_access } = res.data;
+
+        storeTokens(access_token, refresh_token, user_access);
+
+        navigate('/');
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -121,14 +148,14 @@ const LoginPage = () => {
                 margin='normal'
                 required
                 fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
-                autoComplete='email'
-                value={formData.email}
+                id='username'
+                label='Username'
+                name='username'
+                autoComplete='username'
+                value={formData.username}
                 onChange={handleInputChange}
-                error={!!errors.email}
-                helperText={errors.email}
+                error={!!errors.username}
+                helperText={errors.username}
               />
               <TextField
                 margin='normal'

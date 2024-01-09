@@ -1,17 +1,21 @@
 import * as React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   CssBaseline,
   TextField,
   Typography,
+  FormLabel,
   FormControlLabel,
-  Checkbox,
+  FormControl,
   Link,
   Grid,
   Box,
   Paper,
+  Radio,
+  RadioGroup,
 } from '../mui';
 
 function Copyright(props) {
@@ -32,6 +36,7 @@ function Copyright(props) {
   );
 }
 const RegisterPage = () => {
+  const navigate = useNavigate();
   //  state for user Input
   const [formData, setFormData] = useState({
     first_name: '',
@@ -42,6 +47,10 @@ const RegisterPage = () => {
     password: '',
     seller: false,
   });
+
+  const handleClick = () => {
+    setFormData({ ...formData, seller: true });
+  };
 
   const [errors, setErrors] = useState({
     first_name: '',
@@ -77,12 +86,23 @@ const RegisterPage = () => {
     } else {
       newErrors.email = '';
     }
-
+    if (formData.address.trim() === '') {
+      newErrors.address = 'Address is required';
+      valid = false;
+    } else {
+      newErrors.address = '';
+    }
     if (formData.password.trim() === '') {
       newErrors.password = 'Password is required';
       valid = false;
     } else {
       newErrors.password = '';
+    }
+    if (formData.username.trim() === '') {
+      newErrors.username = 'Username is required';
+      valid = false;
+    } else {
+      newErrors.username = '';
     }
 
     setErrors(newErrors); // Update errors
@@ -97,25 +117,26 @@ const RegisterPage = () => {
       [name]: value,
     });
   };
-  const handleInputSubmit = (event) => {
+  const handleInputSubmit = async (event) => {
     event.preventDefault();
     const isValid = validateInputs();
 
     if (isValid) {
       console.log(formData); // Proceed with form submission or other actions
-      axios
+      await axios
         .post(
           'http://127.0.0.1:8000/users_api/register/',
-          { formData },
+          { ...formData },
           {
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json', // Ensure this aligns with allowed headers
             },
           }
         )
         .then((response) => console.log(response))
         .catch((error) => console.log(error));
     }
+    navigate('/login');
   };
 
   return (
@@ -196,6 +217,19 @@ const RegisterPage = () => {
                 margin='normal'
                 required
                 fullWidth
+                id='username'
+                label='User Name'
+                name='username'
+                autoComplete='username'
+                value={formData.username}
+                onChange={handleInputChange}
+                error={!!errors.username}
+                helperText={errors.username}
+              />
+              <TextField
+                margin='normal'
+                required
+                fullWidth
                 id='email'
                 label='Email Address'
                 name='email'
@@ -219,11 +253,24 @@ const RegisterPage = () => {
                 error={!!errors.password}
                 helperText={errors.password}
               />
+              <FormControl>
+                <FormLabel id='demo-radio-buttons-group-label'>
+                  Status
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby='demo-radio-buttons-group-label'
+                  defaultValue='Buyer'
+                  name='radio-buttons-group'
+                >
+                  <FormControlLabel
+                    value={formData.seller}
+                    onClick={handleClick}
+                    control={<Radio />}
+                    label='Buyer'
+                  />
+                </RadioGroup>
+              </FormControl>
 
-              <FormControlLabel
-                control={<Checkbox value='remember' color='primary' />}
-                label='Remember me'
-              />
               <Button
                 type='submit'
                 fullWidth
