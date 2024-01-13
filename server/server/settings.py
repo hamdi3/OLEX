@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "corsheaders",
     "users",
+    "products",
 ]
 
 AUTH_USER_MODEL = 'users.Website_User' # Switching the authentication process to the costum user table

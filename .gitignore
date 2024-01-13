@@ -1,1 +1,9 @@
 server/.env
+server/products/__pycache__
+server/products/migrations
+server/db.sqlite3
+server/users/migrations
+server/users/__pycache__
+server/server/__pycache__
+server/db.sqlite3
+.gitignore
