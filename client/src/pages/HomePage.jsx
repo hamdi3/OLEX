@@ -3,10 +3,13 @@ import { useAuth } from '../context/AuthContext ';
 
 const HomePage = () => {
   const { clearTokens, user } = useAuth();
+
   return (
     <div>
-      <h2>{user?.user_id}</h2>
-      <h4>{user?.joined_date}</h4>
+      <h1>{user.user_id}</h1>
+      <h1>{user.joined_date}</h1>
+      <h1>{user.seller ? 'buyer' : 'seller'}</h1>
+
       <button onClick={clearTokens}>LogOUT</button>
     </div>
   );
