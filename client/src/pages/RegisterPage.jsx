@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Button,
   CssBaseline,
@@ -286,8 +287,8 @@ const RegisterPage = () => {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href='/login' variant='body2'>
-                    {"Don't have an account? Sign Up"}
+                  <Link component={RouterLink} to='/login' variant='body2'>
+                    {'Already have an account? Sign In'}
                   </Link>
                 </Grid>
               </Grid>
