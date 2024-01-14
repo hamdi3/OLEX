@@ -3,5 +3,5 @@ import Home from './HomePage';
 import Register from './RegisterPage';
 import Error from './ErrorPage';
 import About from './AboutPage';
-
-export { Login, Home, Register, Error, About };
+import Products from './ProductsPage';
+export { Login, Home, Register, Error, About, Products };
