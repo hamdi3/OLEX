@@ -1,3 +1,4 @@
 import Navbar from './Navbar';
-import PasswordInput from './PasswordInput';
-export { Navbar, PasswordInput };
+import Footer from './Footer';
+
+export { Navbar, Footer };
