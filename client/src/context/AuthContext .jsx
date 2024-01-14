@@ -13,13 +13,13 @@ export const AuthProvider = ({ children }) => {
 
   //  initial state
   const [accessToken, setAccessToken] = useState(
-    localStorage.getItem('access_token') || null
+    localStorage.getItem('access_token')
   );
   const [refreshToken, setRefreshToken] = useState(
-    localStorage.getItem('refresh_token') || null
+    localStorage.getItem('refresh_token')
   );
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem('user_access')) || null
+    JSON.parse(localStorage.getItem('user_access'))
   );
 
   // storing tokens
@@ -73,14 +73,10 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (accessToken && refreshToken && user) {
-      setAccessToken(accessToken);
-      setRefreshToken(refreshToken);
-      setUser(user);
-      // only if user is logged in
-      if (user !== null) {
-        const intervalId = tokenRefreshInterval();
-        return () => clearInterval(intervalId);
-      }
+      // Only start the token refresh interval if the user is logged in
+      const intervalId = tokenRefreshInterval();
+
+      return () => clearInterval(intervalId);
     } else {
       clearTokens();
     }
