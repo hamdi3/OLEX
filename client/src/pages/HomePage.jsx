@@ -7,9 +7,6 @@ const HomePage = () => {
   return (
     <div>
       <h1>{user.user_id}</h1>
-      <h1>{user.joined_date}</h1>
-      <h1>{user.seller ? 'buyer' : 'seller'}</h1>
-
       <button onClick={clearTokens}>LogOUT</button>
     </div>
   );
