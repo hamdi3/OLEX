@@ -83,7 +83,6 @@ export const AuthProvider = ({ children }) => {
       }
     } else {
       clearTokens();
-      navigate('/login');
     }
   }, [accessToken, refreshToken, user]);
 
