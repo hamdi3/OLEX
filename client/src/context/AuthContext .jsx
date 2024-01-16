@@ -55,14 +55,14 @@ export const AuthProvider = ({ children }) => {
           }
         );
 
-        if (!response.status === 200) {
+        if (response.status !== 200) {
           clearTokens();
           return;
         }
         const { access_token } = response.data;
 
         setAccessToken(access_token);
-        console.log('new Access token', accessToken);
+        console.log('refresh token successful');
       } catch (error) {
         console.error('Token refresh failed:', error);
       }
