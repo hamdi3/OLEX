@@ -1,41 +1,36 @@
-import { useProduct } from '../context/ProductContext';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import { useState } from 'react';
+import ProductForm from '../components/ProductForm'; // Correct import
 
 const ProductsPage = () => {
-  const { products } = useProduct();
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const handleFabClick = () => {
+    setIsFormOpen(true);
+  };
+
+  const handleCloseForm = () => {
+    setIsFormOpen(false);
+  };
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-      {products.map((item) => (
-        <Card key={item.id} style={{ maxWidth: 345, margin: 16 }}>
-          <CardMedia
-            component='img'
-            alt={item.name}
-            height='140'
-            src={item.image}
-            onError={(e) => {
-              console.error(`Error loading image for ${item.name}:`, e);
-            }}
-            onLoad={() => {
-              console.log(`Image loaded successfully for ${item.name}`);
-            }}
-          />
-          <CardContent>
-            <Typography variant='h6' component='div'>
-              {item.name}
-            </Typography>
-            <Typography variant='body2' color='text.secondary'>
-              {item.description}
-            </Typography>
-          </CardContent>
-          {/* Log the image URL just before rendering */}
-          {console.log('Image URL:', item.image)}
-        </Card>
-      ))}
-    </div>
+    <>
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: '16px',
+          right: '16px',
+        }}
+      >
+        <Fab color='primary' aria-label='add' onClick={handleFabClick}>
+          <AddIcon />
+        </Fab>
+      </Box>
+      <ProductForm open={isFormOpen} onClose={handleCloseForm} />
+    </>
   );
 };
 
