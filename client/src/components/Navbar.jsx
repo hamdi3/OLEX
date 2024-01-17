@@ -77,12 +77,14 @@ function Navbar() {
           <Toolbar disableGutters>
             <RouterLink className='link' to='/'>
               <Typography
+                variant='h2'
+                component={'h2'}
                 noWrap
                 sx={{
                   display: { xs: 'none', md: 'flex' },
                 }}
               >
-                <img src={logo} alt='logo' className='logo' />
+                OLEX
               </Typography>
             </RouterLink>
 
@@ -164,7 +166,7 @@ function Navbar() {
                     flexGrow: 1,
                   }}
                 >
-                  <img src={logo} alt='logo' className='logo' />
+                  OLEX
                 </Typography>
               </RouterLink>
             </Box>
@@ -218,7 +220,7 @@ function Navbar() {
                 }}
               >
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                  {/* <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' /> */}
                   <ShoppingCartSharpIcon fontSize='large' />
                 </IconButton>
               </Tooltip>

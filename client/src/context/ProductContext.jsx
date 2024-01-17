@@ -12,11 +12,18 @@ const ProductContext = createContext();
 
 export const useProduct = () => {
   return useContext(ProductContext);
+  0;
 };
 
 export const ProductProvider = ({ children }) => {
   const { accessToken, user } = useAuth();
   const [products, setProducts] = useState([]);
+
+  const deleteroduct = (id) => {
+    let newPro = products.filter((item) => item.id !== id);
+    setProducts(newPro);
+    console.log('deletedproducts');
+  };
   const fetchProducts = useCallback(async () => {
     if (user) {
       try {
@@ -36,11 +43,14 @@ export const ProductProvider = ({ children }) => {
   }, [accessToken, products]);
 
   useEffect(() => {
-    fetchProducts();
-  }, [accessToken]);
+    // Only fetch products if accessToken and user are available
+    if (accessToken && user) {
+      fetchProducts();
+    }
+  }, [accessToken, user]);
 
   return (
-    <ProductContext.Provider value={{ products }}>
+    <ProductContext.Provider value={{ products, deleteroduct }}>
       {children}
     </ProductContext.Provider>
   );
