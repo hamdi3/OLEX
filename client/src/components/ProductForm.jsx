@@ -9,9 +9,8 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext ';
-// ... (imports and other code)
 
-const ProductForm = ({ open, onClose, onProductAdded }) => {
+const ProductForm = ({ open, onClose, onProductAdded, editId, editing }) => {
   const { accessToken } = useAuth();
   const [productData, setProductData] = useState({
     productName: '',
@@ -71,38 +70,84 @@ const ProductForm = ({ open, onClose, onProductAdded }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Add Product</DialogTitle>
-      <DialogContent>
-        <form encType='multipart/form-data' onSubmit={handleSubmit}>
-          <TextField
-            label='Product Name'
-            name='productName'
-            value={productData.productName}
-            onChange={handleInputChange}
-            fullWidth
-          />
-          <TextField
-            label='Product Description'
-            name='productDescription'
-            value={productData.productDescription}
-            onChange={handleInputChange}
-            fullWidth
-          />
-          <TextField
-            type='number'
-            label='Product Price'
-            name='productPrice'
-            value={productData.productPrice}
-            onChange={handleInputChange}
-            fullWidth
-          />
-          <Input type='file' accept='image/*' onChange={handleImageChange} />
-          <Button variant='contained' color='primary' type='submit'>
-            Add Product
-          </Button>
-        </form>
-      </DialogContent>
+    <Dialog open={open} onClose={onClose} editId={editId} editing={editing}>
+      {!editId ? (
+        <>
+          <DialogTitle>Add Product</DialogTitle>
+          <DialogContent>
+            <form encType='multipart/form-data' onSubmit={handleSubmit}>
+              <TextField
+                label='Product Name'
+                name='productName'
+                value={productData.productName}
+                onChange={handleInputChange}
+                fullWidth
+              />
+              <TextField
+                label='Product Description'
+                name='productDescription'
+                value={productData.productDescription}
+                onChange={handleInputChange}
+                fullWidth
+              />
+              <TextField
+                type='number'
+                label='Product Price'
+                name='productPrice'
+                value={productData.productPrice}
+                onChange={handleInputChange}
+                fullWidth
+              />
+              <Input
+                type='file'
+                accept='image/*'
+                onChange={handleImageChange}
+              />
+              <Button variant='contained' color='primary' type='submit'>
+                Add Product
+              </Button>
+            </form>
+          </DialogContent>
+        </>
+      ) : (
+        <>
+          <DialogTitle>Edit Product</DialogTitle>
+          <DialogContent>
+            <form encType='multipart/form-data'>
+              <TextField
+                label='Product Name'
+                name='productName'
+                value={productData.productName}
+                onChange={handleInputChange}
+                fullWidth
+              />
+              <TextField
+                label='Product Description'
+                name='productDescription'
+                value={productData.productDescription}
+                onChange={handleInputChange}
+                fullWidth
+              />
+              <TextField
+                type='number'
+                label='Product Price'
+                name='productPrice'
+                value={productData.productPrice}
+                onChange={handleInputChange}
+                fullWidth
+              />
+              <Input
+                type='file'
+                accept='image/*'
+                onChange={handleImageChange}
+              />
+              <Button variant='contained' color='primary' type='submit'>
+                Edit Product
+              </Button>
+            </form>
+          </DialogContent>
+        </>
+      )}
     </Dialog>
   );
 };
