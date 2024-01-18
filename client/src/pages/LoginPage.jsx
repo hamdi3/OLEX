@@ -97,7 +97,6 @@ const LoginPage = () => {
             },
           }
         );
-        console.log(res.data, 'res');
 
         const { access_token, refresh_token, user_access } = res.data;
 
