@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import authFetch from '../axios/authFetch';
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -48,21 +49,18 @@ export const AuthProvider = ({ children }) => {
   const tokenRefreshInterval = () => {
     const intervalId = setInterval(async () => {
       try {
-        const response = await axios.post(
-          'http://127.0.0.1:8000/users_api/refresh_token/',
-          {
-            refresh: refreshToken,
-          }
-        );
+        const response = await authFetch.post('/refresh_token/', {
+          refresh: refreshToken,
+        });
 
+        const { access_token } = response.data;
+
+        setAccessToken(access_token);
+        localStorage.setItem('access_token', access_token);
         if (response.status !== 200) {
           clearTokens();
           return;
         }
-        const { access_token } = response.data;
-
-        setAccessToken(access_token);
-        console.log('refresh token successful');
       } catch (error) {
         console.error('Token refresh failed:', error);
       }
@@ -72,10 +70,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (accessToken && refreshToken && user) {
+    if (accessToken && refreshToken) {
       // Only start the token refresh interval if the user is logged in
       const intervalId = tokenRefreshInterval();
-
+      console.log('interval starting');
       return () => clearInterval(intervalId);
     } else {
       clearTokens();

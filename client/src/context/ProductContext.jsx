@@ -1,40 +1,28 @@
-import axios from 'axios';
 import {
   createContext,
   useContext,
-  useEffect,
   useState,
   useCallback,
+  useEffect,
 } from 'react';
 import { useAuth } from './AuthContext ';
+import authFetchProducts from '../axios/authFetchProducts';
+import axios from 'axios';
 
 const ProductContext = createContext();
 
 export const useProduct = () => {
   return useContext(ProductContext);
-  0;
 };
-
 export const ProductProvider = ({ children }) => {
   const { accessToken, user } = useAuth();
   const [products, setProducts] = useState([]);
 
-  const deleteroduct = (id) => {
-    let newPro = products.filter((item) => item.id !== id);
-    setProducts(newPro);
-    console.log('deletedproducts');
-  };
+  // fetching Products
   const fetchProducts = useCallback(async () => {
     if (user) {
       try {
-        const response = await axios.get(
-          'http://127.0.0.1:8000/products_api/products/',
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const response = await authFetchProducts('/products/');
         setProducts(response.data);
       } catch (error) {
         console.log(error);
@@ -42,15 +30,50 @@ export const ProductProvider = ({ children }) => {
     }
   }, [accessToken, products]);
 
-  useEffect(() => {
-    // Only fetch products if accessToken and user are available
-    if (accessToken && user) {
+  //  deleting Products
+  const deletedProduct = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://127.0.0.1:8000/products_api/products/${id}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      );
+      console.log('deleted', response);
       fetchProducts();
+    } catch (error) {
+      console.log(error);
     }
-  }, [accessToken, user]);
+  };
 
+  const editProduct = async (id) => {
+    try {
+      const response = await axios.put(
+        `http://127.0.0.1:8000/products_api/products/${id}`,
+        {
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      );
+      console.log('deleted', response);
+      fetchProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <ProductContext.Provider value={{ products, deleteroduct }}>
+    <ProductContext.Provider
+      value={{
+        products,
+        setProducts,
+        fetchProducts,
+        deletedProduct,
+        editProduct,
+      }}
+    >
       {children}
     </ProductContext.Provider>
   );
