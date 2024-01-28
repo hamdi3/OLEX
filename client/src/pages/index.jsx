@@ -1,19 +1,19 @@
-import Login from './LoginPage';
-import Home from './HomePage';
-import Register from './RegisterPage';
-import Error from './ErrorPage';
-import About from './AboutPage';
-import Products from './ProductsPage';
-import Checkout from './CheckoutPage';
-import SingleProduct from './SingleProductsPage';
+import About from './About';
+import Error from './Error';
+import Home from './Home';
+import Login from './Login';
+import ProductDetails from './ProductDetails';
+import Profile from './Profile';
+import ProtectedRoute from './ProtectedRoute ';
+import Register from './Register';
 
 export {
-  Login,
-  Home,
-  Register,
-  Error,
   About,
-  Products,
-  Checkout,
-  SingleProduct,
+  Error,
+  Home,
+  Login,
+  ProductDetails,
+  ProtectedRoute,
+  Profile,
+  Register,
 };
