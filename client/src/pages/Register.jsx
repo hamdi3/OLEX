@@ -14,10 +14,11 @@ const Register = () => {
   });
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+    const inputValue = type === 'checkbox' ? checked : value;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: inputValue,
     });
   };
 
@@ -132,18 +133,19 @@ const Register = () => {
                 onChange={handleInputChange}
               />
             </div>
-            {/* <div className='mb-6 flex items-center justify-start'>
-                <div className='mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]'></div>
-
-                <div className='mb-4  text-center'>
-                  <a
-                    href='#!'
-                    className='text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600'
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-              </div> */}
+            <div className='mb-4'>
+              <label htmlFor='seller'>
+                <input
+                  type='checkbox'
+                  id='seller'
+                  name='seller'
+                  checked={formData.seller}
+                  onChange={handleInputChange}
+                  className='mr-2'
+                />
+                seller
+              </label>
+            </div>
             <button
               type='submit'
               className='inline-block w-full rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white'
@@ -157,5 +159,4 @@ const Register = () => {
     </section>
   );
 };
-
 export default Register;
