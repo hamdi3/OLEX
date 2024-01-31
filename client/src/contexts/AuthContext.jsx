@@ -8,23 +8,22 @@ import {
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// creating auth Context
 const AuthContext = createContext();
-
+//  using Auth provider
 const AuthProvider = ({ children }) => {
+  // using navigate from react-router-dom
   const navigate = useNavigate();
-
   //  user login state
   const [authLogin, setAuthLogin] = useState({
     accessToken: localStorage.getItem('access_token') || '',
     refreshToken: localStorage.getItem('refresh_token') || '',
     user: JSON.parse(localStorage.getItem('user_access')) || {},
   });
-
   // storing tokens
   const storeTokens = useCallback((access, refresh, userData) => {
     localStorage.setItem('access_token', access);
     localStorage.setItem('refresh_token', refresh);
-
     // Ensure 'authLogIn.userData' is defined before using JSON.stringify
     if (userData) {
       localStorage.setItem('user_access', JSON.stringify(userData));
@@ -38,29 +37,24 @@ const AuthProvider = ({ children }) => {
       console.error('userData is undefined or null');
     }
   }, []);
-
   // clearing tokens
   const clearTokens = useCallback(() => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('user_access');
-
     navigate('/login');
   }, [navigate]);
-
   // token interval
   const tokenRefreshInterval = useCallback(() => {
     const intervalId = setInterval(async () => {
       try {
         const response = await axios.post(
-          'http://127.0.0.1:8000/users_api/login/',
+          'http://127.0.0.1:8000/users_api/refresh_token/',
           {
             refresh: authLogin.refreshToken,
           }
         );
-
         const { access_token } = response.data;
-
         setAuthLogin((prevAuthLogin) => ({
           ...prevAuthLogin,
           accessToken: access_token,
@@ -76,7 +70,6 @@ const AuthProvider = ({ children }) => {
       }
       // Interval set to 29 minutes
     }, 29 * 60 * 1000);
-
     return intervalId;
   }, [authLogin.refreshToken, clearTokens]);
 
@@ -95,16 +88,14 @@ const AuthProvider = ({ children }) => {
     clearTokens,
     tokenRefreshInterval,
   ]);
-
   return (
     <AuthContext.Provider value={{ ...authLogin, storeTokens, clearTokens }}>
       {children}
     </AuthContext.Provider>
   );
 };
-
+// creating custom hook
 const useAuth = () => {
   return useContext(AuthContext);
 };
-
 export { AuthContext, AuthProvider, useAuth };
