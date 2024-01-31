@@ -22,13 +22,13 @@ const App = () => {
                 <Routes>
                   <Route path='/login' element={<Login />} />
                   <Route path='/register' element={<Register />} />
-                  <Route path='*' element={<Error />} />
                   <Route element={<ProtectedRoute />}>
                     <Route path='/' element={<Home />} />
                     <Route path='/profile' element={<Profile />} />
                     <Route path='/about' element={<About />} />
                     <Route path='/product/:id' element={<ProductDetails />} />
                   </Route>
+                  <Route path='*' element={<Error />} />
                 </Routes>
               </ProductProvider>
             </CartProvider>
