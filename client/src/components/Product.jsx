@@ -12,14 +12,14 @@ const Product = ({ product }) => {
   const { id, image, description, name, price } = product;
   return (
     <div>
-      <div className='border border-[#e4e4e4] h-[300px] mb-4 relative overflow-hidden group transition'>
+      <div className='border border-[#dad7cd] h-[300px] mb-4 relative overflow-hidden group transition'>
         <div className='w-full h-full flex justify-center items-center'>
           {/* image */}
           <div className='w-[200px] mx-auto flex justify-center items-center'>
             <img
               className='max-h-[160px] group-hover:scale-110 transition duration-300'
               src={image}
-              alt=''
+              alt={name}
             />
           </div>
         </div>
@@ -40,14 +40,21 @@ const Product = ({ product }) => {
       </div>
       {/* category, title & price */}
       <div>
-        <div className='tex-sm capitalize text-gray-500 mb-1'>
+        <Link to={`/product/${id}`}>
+          <h2 className='font-bold mb-1 text-lg' style={{ color: '#344e41' }}>
+            {name}
+          </h2>
+        </Link>
+        <div
+          className='text-xl capitalize mb-1 font-bold'
+          style={{ color: '#3a5a40' }}
+        >
           {description}
         </div>
-        <Link to={`/product/${id}`}>
-          <h2 className='font-semibold mb-1'>{name}</h2>
-        </Link>
 
-        <h2 className='font-semibbold'>$ {price}</h2>
+        <h2 className='text-xl font-bold' style={{ color: '#588157' }}>
+          $ {price}
+        </h2>
       </div>
     </div>
   );
