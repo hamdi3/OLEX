@@ -46,31 +46,32 @@ const Header = () => {
                 </Link>
               </div>
               <div className='flex-grow flex items-center justify-center'>
-                <ul className='flex space-x-4'>
+                <ul className='flex space-x-12'>
                   <li>
-                    <Link to='/'>Home</Link>
+                    <Link to='/' className='link-btn  text-[18px]'>
+                      Home
+                    </Link>
                   </li>
                   <li>
-                    <Link to='/about'>About</Link>
+                    <Link to='/about' className='text-[18px]'>
+                      About
+                    </Link>
                   </li>
                   <li>
-                    <Link to='/products'>Products</Link>
+                    <Link to='/products' className='text-[18px]'>
+                      Products
+                    </Link>
                   </li>
                   <li>
-                    <Link to='/contact'>Contact</Link>
+                    <Link to='/contact' className='text-[18px]'>
+                      Contact
+                    </Link>
                   </li>
                 </ul>
               </div>
-              <div className='flex items-center space-x-4'>
-                {/* User image */}
-                <Link to='/profile'>
-                  <img
-                    className='w-9 h-9 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500'
-                    src={profile}
-                    alt='Bordered avatar'
-                  />
-                </Link>
-                {/* Cart */}
+
+              {/* Cart */}
+              <div className='flex items-center space-x-8'>
                 <div
                   onClick={() => setIsOpen(!isOpen)}
                   className='cursor-pointer flex relative'
@@ -80,8 +81,21 @@ const Header = () => {
                     {itemAmount}
                   </div>
                 </div>
-                <button type='button' onClick={clearTokens}>
-                  LogOut
+                {/* User image */}
+                <Link to='/profile'>
+                  <img
+                    className='w-8 h-8 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500'
+                    src={profile}
+                    alt='Bordered avatar'
+                  />
+                </Link>
+
+                <button
+                  type='button'
+                  className='text-[20px] font-bold logout-btn'
+                  onClick={clearTokens}
+                >
+                  Logout
                 </button>
               </div>
               {/* Logout button */}
