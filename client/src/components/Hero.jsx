@@ -1,25 +1,31 @@
 import { Link } from 'react-router-dom';
-
+import '../index.css';
 const Hero = () => {
   return (
-    <section className='h-[800px] bg-hero bg-no-repeat bg-cover bg-center py-20'>
-      <div className='container mx-auto flex justify-around h-full'>
-        {/* text */}
-        <div className='flex flex-col justify-center'>
-          <div className='font-semibold flex items-center uppercase'>
-            <div className='w-10 h-[2px] mr-3 bg-cyan-700'></div>Trending
-          </div>
-          <h1 className='uppercase text-[55px] md:text-[70px] leading-[1.1] font-semibold mb-4'>
-            WELCOME TO OLEX
-            <br />
-            <span className='font-light'>HOME OF PRODUCTS</span>
-          </h1>
-          <Link
-            to={'/'}
-            className='self-start uppercase font-semibold border-b-2 border-primary'
+    <section className='py-24 flex items-center min-h-screen justify-center bg-white'>
+      <div className='mx-auto max-w-[43rem]'>
+        <div className='text-center'>
+          <p
+            className='text-[1.5rem] font-bold leading-8'
+            style={{ color: '#344E41' }}
           >
-            Discover More
-          </Link>
+            Welcome to OLEX
+          </p>
+
+          <h1
+            className='mt-3 text-[3.5rem] font-bold leading-[4rem] tracking-tight'
+            style={{ color: '#3a5a40' }}
+          >
+            Your E-commerce Home
+          </h1>
+
+          <p
+            className='mt-3 text-lg leading-relaxed'
+            style={{ color: '#588157' }}
+          >
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum,
+            quaerat.
+          </p>
         </div>
       </div>
     </section>
