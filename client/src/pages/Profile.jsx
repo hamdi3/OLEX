@@ -10,16 +10,16 @@ const Profile = () => {
   // calling user info from useAuth Context
   const { user, accessToken } = useAuth();
   // state for adding products
-  const [addNew, setAddNew] = useState(false);
+  const [newProductPopup, setNewProductPopup] = useState(false);
   //  state for the user Products
   const [userProducts, setUserProducts] = useState([]);
   //  showing the product form
   const toggleAddProduct = () => {
-    setAddNew((prevAddNew) => !prevAddNew);
+    setNewProductPopup((prevAddNew) => !prevAddNew);
   };
   // closing product from
   const closePopup = () => {
-    setAddNew(false);
+    setNewProductPopup(false);
   };
   // adding a new product form
   const [productForm, setProductForm] = useState({
@@ -45,6 +45,7 @@ const Profile = () => {
   //  product form input onChange
   const handleProductChange = (e) => {
     const { name, value, type } = e.target;
+
     setProductForm((prevProductForm) => {
       if (type === 'file') {
         const selectedImage = e.target.files[0];
@@ -93,8 +94,7 @@ const Profile = () => {
   const fetchingUserProducts = useCallback(() => {
     let newProducts = products.filter((item) => item.seller === user.user_id);
     setUserProducts(newProducts);
-    console.log(userProducts);
-  }, [products, user.user_id, setUserProducts]);
+  }, [products]);
   useEffect(() => {
     fetchingUserProducts();
   }, [fetchingUserProducts]);
@@ -103,7 +103,10 @@ const Profile = () => {
     <section className='py-20'>
       <div className='container mx-auto'>
         <div className='mt-20'>
-          <h1 className='text-3xl font-semibold mb-10 text-center'>
+          <h1
+            className='text-3xl font-semibold mb-10 text-center'
+            style={{ color: '#3a5a40' }}
+          >
             Your Products
           </h1>
         </div>
@@ -111,7 +114,7 @@ const Profile = () => {
         <div className='fixed bottom-16 right-16'>
           <button
             onClick={toggleAddProduct}
-            className='bg-blue-500 hover:bg-blue-600 text-white rounded-full p-2 focus:outline-none'
+            className='bg-[#344e41] hover:bg-[#588157] text-white rounded-full p-2 focus:outline-none'
           >
             <svg
               className='h-8 w-8 text-white-500'
@@ -130,7 +133,7 @@ const Profile = () => {
           </button>
         </div>
         {/* Product Form */}
-        {addNew && (
+        {newProductPopup && (
           <>
             <div
               id='login-popup'
@@ -162,9 +165,8 @@ const Profile = () => {
                   <div className='p-5'>
                     <h3 className='text-2xl mb-0.5 font-medium'></h3>
                     <p className='mb-4 text-sm font-normal text-gray-800'></p>
-
                     <div className='text-center'>
-                      <p className='mb-3 text-2xl font-semibold leading-5 text-slate-900'>
+                      <p className='mb-3 text-2xl font-semibold leading-5 '>
                         Add A New Product
                       </p>
                     </div>
@@ -274,7 +276,7 @@ const Profile = () => {
             {userProducts.map((product) => (
               <div key={product.id} className='flex flex-wrap -mx-4 mb-12'>
                 <div className='w-full px-4 md:w-1/2'>
-                  <div className='sticky top-0 z-50 overflow-hidden'>
+                  <div className='top-0 z-50 overflow-hidden'>
                     <div className='relative mb-6 lg:mb-10 lg:h-2/4'>
                       <img
                         src={product.image}
@@ -287,13 +289,22 @@ const Profile = () => {
                 <div className='w-full px-4 md:w-1/2'>
                   <div className='lg:pl-20'>
                     <div className='mb-8'>
-                      <h2 className='max-w-xl mt-2 mb-6 text-2xl font-bold dark:text-black-400 md:text-4xl'>
+                      <h2
+                        className='max-w-xl mt-2 mb-6 text-2xl font-bold  md:text-4xl'
+                        style={{ color: '#344e41' }}
+                      >
                         {product.name}
                       </h2>
-                      <p className='max-w-md mb-8 text-gray-700 dark:text-gray-400'>
+                      <p
+                        className='max-w-md mb-8 text-xl capitalize mb-1 font-bold'
+                        style={{ color: '#3a5a40' }}
+                      >
                         {product.description}
                       </p>
-                      <p className='inline-block mb-8 text-4xl font-bold text-gray-700 dark:text-gray-400'>
+                      <p
+                        className='inline-block mb-8 text-4xl font-bold'
+                        style={{ color: '#588157' }}
+                      >
                         <span>${product.price}</span>
                       </p>
                     </div>
@@ -301,12 +312,12 @@ const Profile = () => {
                     {/* product details buttons */}
                     <div className='flex flex-wrap items-center -mx-4'>
                       <div className='w-full px-4 mb-4 lg:w-1/2 lg:mb-0'>
-                        <button className='flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300'>
+                        <button className='flex items-center justify-center w-full p-4 text-[#588157] border border-[#a3b18a] rounded-md dark:text-[#588157] dark:border-[#a3b18a] hover:bg-[#3A5A40] hover:border-[#dad7cd] hover:text-gray-100 dark:bg-[#3A5A40] dark:hover:bg-[#3A5A40] dark:hover:border-[#dad7cd] dark:hover:text-gray-300'>
                           Edit
                         </button>
                       </div>
                       <div className='w-full px-4 mb-4 lg:mb-0 lg:w-1/2'>
-                        <button className='flex items-center justify-center w-full p-4 text-blue-500 border border-blue-500 rounded-md dark:text-gray-200 dark:border-blue-600 hover:bg-blue-600 hover:border-blue-600 hover:text-gray-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:hover:border-blue-700 dark:hover:text-gray-300'>
+                        <button className='flex items-center justify-center w-full p-4 text-[#588157] border border-[#a3b18a] rounded-md dark:text-[#588157] dark:border-[#a3b18a] hover:bg-[#3A5A40] hover:border-[#dad7cd] hover:text-gray-100 dark:bg-[#3A5A40] dark:hover:bg-[#3A5A40] dark:hover:border-[#dad7cd] dark:hover:text-gray-300'>
                           Delete
                         </button>
                       </div>
