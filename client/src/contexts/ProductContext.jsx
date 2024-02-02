@@ -17,21 +17,24 @@ const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   // fetch products
   const fetchProducts = useCallback(async () => {
-    const response = await axios(
-      'http://127.0.0.1:8000/products_api/products/',
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    setProducts(response.data);
+    if (accessToken) {
+      const response = await axios(
+        'http://127.0.0.1:8000/products_api/products/',
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      setProducts(response.data);
+    }
   }, [accessToken]);
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+    console.log('access token');
+  }, [accessToken]);
   return (
     <ProductContext.Provider value={{ products, fetchProducts }}>
       {children}
