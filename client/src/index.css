@@ -10,3 +10,45 @@
 .about-page {
   height: 80vh;
 }
+.gradient-custom {
+  background: linear-gradient(to right, #dad7cd, #344e41);
+}
+.login-btn {
+  background-color: rgb(88 129 87 / var(--tw-bg-opacity));
+}
+.login-background {
+  background: linear-gradient(to right, #a3b18a, #588157);
+}
+.login-btn:hover {
+  background: linear-gradient(to right, #a3b18a, #344e41);
+  color: #fff;
+}
+.logout-btn {
+  color: #344e41;
+}
+.logout-btn:hover {
+  color: #588157;
+}
+ul {
+  position: relative;
+}
+ul li {
+  list-style: none;
+  text-align: center;
+}
+ul li a {
+  color: #344e41;
+  text-decoration: none;
+  font-size: 3em;
+  padding: 5px 20px;
+  display: inline-flex;
+  font-weight: 700;
+  transition: 0.5s;
+}
+ul:hover li a {
+  color: #dad7cd;
+}
+ul li:hover a {
+  color: #588157;
+  background: transparent;
+}
