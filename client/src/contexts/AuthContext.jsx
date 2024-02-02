@@ -60,6 +60,7 @@ const AuthProvider = ({ children }) => {
           accessToken: access_token,
         }));
         localStorage.setItem('access_token', access_token);
+        console.log('new access');
         if (response.status !== 200) {
           clearTokens();
           clearInterval(intervalId);
