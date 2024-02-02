@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const Register = () => {
   const navigate = useNavigate();
+  // register form state
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
@@ -12,7 +13,7 @@ const Register = () => {
     password: '',
     seller: false,
   });
-
+  // register input onChange
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     const inputValue = type === 'checkbox' ? checked : value;
@@ -21,7 +22,7 @@ const Register = () => {
       [name]: inputValue,
     });
   };
-
+  // register form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
