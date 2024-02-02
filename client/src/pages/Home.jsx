@@ -20,7 +20,10 @@ const Home = () => {
       <Hero />
       <section className='py-20'>
         <div className='container mx-auto'>
-          <h1 className='text-3xl font-semibold mb-10 text-center'>
+          <h1
+            className='text-3xl font-semibold mb-10 text-center'
+            style={{ color: '#3a5a40' }}
+          >
             Explore Our Products
           </h1>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 lg:mx-8 gap-[30px] max-w-sm mx-auto md:max-w-none md:mx-0'>
