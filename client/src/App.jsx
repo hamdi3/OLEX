@@ -11,6 +11,7 @@ import {
   ProductDetails,
   Home,
 } from './pages';
+import { ProfileProvider } from './contexts/ProfileContext';
 const App = () => {
   return (
     <div className='overflow-hidden'>
@@ -19,17 +20,19 @@ const App = () => {
           <SidebarProvider>
             <CartProvider>
               <ProductProvider>
-                <Routes>
-                  <Route path='/login' element={<Login />} />
-                  <Route path='/register' element={<Register />} />
-                  <Route path='*' element={<Error />} />
-                  <Route path='/' element={<ProtectedRoute />}>
-                    <Route index element={<Home />} />
-                    <Route path='/profile' element={<Profile />} />
-                    <Route path='/about' element={<About />} />
-                    <Route path='product/:id' element={<ProductDetails />} />
-                  </Route>
-                </Routes>
+                <ProfileProvider>
+                  <Routes>
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/register' element={<Register />} />
+                    <Route path='*' element={<Error />} />
+                    <Route path='/' element={<ProtectedRoute />}>
+                      <Route index element={<Home />} />
+                      <Route path='/profile' element={<Profile />} />
+                      <Route path='/about' element={<About />} />
+                      <Route path='product/:id' element={<ProductDetails />} />
+                    </Route>
+                  </Routes>
+                </ProfileProvider>
               </ProductProvider>
             </CartProvider>
           </SidebarProvider>
