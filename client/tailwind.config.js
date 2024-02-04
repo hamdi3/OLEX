@@ -20,9 +20,18 @@ module.exports = {
       colors: {
         primary: '#222222',
         secondary: '#F5E6E0',
+        588157: '#588157',
       },
       backgroundImage: {
         hero: "url('./img/bghero.jpg')",
+      },
+      backgroundColor: {
+        588157: '#588157',
+        a3b18a: '#a3b18a',
+      },
+      textColor: {
+        '3a5a40': '#3a5a40',
+        a3b18a: '#a3b18a',
       },
     },
   },
