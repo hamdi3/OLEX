@@ -33,8 +33,7 @@ const ProductProvider = ({ children }) => {
 
   useEffect(() => {
     fetchProducts();
-    console.log('access token');
-  }, [accessToken]);
+  }, [accessToken, fetchProducts]);
   return (
     <ProductContext.Provider value={{ products, fetchProducts }}>
       {children}
