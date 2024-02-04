@@ -3,8 +3,11 @@ import { useProducts } from '../contexts/ProductContext';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useAuth } from '../contexts/AuthContext';
+import { useProfile } from '../contexts/ProfileContext';
 
 const Profile = () => {
+  const data = useProfile();
+  console.log(data);
   //  calling products from products Context
   const { products } = useProducts();
   // calling user info from useAuth Context
@@ -140,7 +143,7 @@ const Profile = () => {
               tabIndex='-1'
               className='bg-black/50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 h-full w-full items-center justify-center flex'
             >
-              <div className='relative p-4 w-full max-w-md h-full md:h-auto'>
+              <div className='relative p-4 w-full max-w-md h-screen/1 md:h-screen/1'>
                 <div className='relative bg-white rounded-lg shadow'>
                   <button
                     onClick={closePopup}
@@ -162,11 +165,11 @@ const Profile = () => {
                     </svg>
                   </button>
 
-                  <div className='p-5'>
+                  <div className='p-5' style={{ height: '60vh' }}>
                     <h3 className='text-2xl mb-0.5 font-medium'></h3>
                     <p className='mb-4 text-sm font-normal text-gray-800'></p>
                     <div className='text-center'>
-                      <p className='mb-3 text-2xl font-semibold leading-5 '>
+                      <p className='mb-10 text-2xl font-semibold leading-5 text-3a5a40'>
                         Add A New Product
                       </p>
                     </div>
@@ -185,7 +188,7 @@ const Profile = () => {
                           type='text'
                           autoComplete='name'
                           required
-                          className='block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-black focus:ring-offset-1'
+                          className='block w-full rounded-lg border px-3 py-2 shadow-sm outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-588157 focus:border-588157 bg-3a5a40 text-3a5a40'
                           placeholder='Product Name'
                           value={productForm.name}
                           onChange={handleProductChange}
@@ -200,7 +203,7 @@ const Profile = () => {
                           type='text'
                           autoComplete='description'
                           required
-                          className='block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-black focus:ring-offset-1'
+                          className='block w-full rounded-lg border px-3 py-2 shadow-sm outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-588157 focus:border-588157 bg-3a5a40 text-3a5a40'
                           placeholder='Product description'
                           value={productForm.description}
                           onChange={handleProductChange}
@@ -213,10 +216,10 @@ const Profile = () => {
                         <input
                           name='price'
                           type='number'
+                          placeholder='Product price'
                           autoComplete='price'
                           required
-                          className='block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-black focus:ring-offset-1'
-                          placeholder='Product Price'
+                          className='block w-full rounded-lg border px-3 py-2 shadow-sm outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-588157 focus:border-588157 bg-3a5a40 text-3a5a40'
                           value={productForm.price}
                           onChange={handleProductChange}
                         />
@@ -242,13 +245,13 @@ const Profile = () => {
                                 className='max-w-full h-auto mb-2 rounded-lg'
                               />
                             )}
-                            <p className='text-gray-500 dark:text-gray-400'>
-                              <span className='font-semibold'>
+                            <p className='text-3a5a40 dark:text-gray-400'>
+                              <span className='font-semibold text-3a5a40'>
                                 Click to upload
                               </span>
                               or drag and drop
                             </p>
-                            <p className='text-xs text-gray-500 dark:text-gray-400'>
+                            <p className='text-xs text-3a5a40 dark:text-gray-400'>
                               SVG, PNG, JPG or GIF (MAX. 800x400px)
                             </p>
                           </div>
@@ -257,9 +260,9 @@ const Profile = () => {
 
                       <button
                         type='submit'
-                        className='inline-flex w-full items-center justify-center rounded-lg bg-black p-2 py-3 text-sm font-medium text-white outline-none focus:ring-2 focus:ring-black focus:ring-offset-1 disabled:bg-gray-400'
+                        className='inline-flex w-full items-center justify-center rounded-lg bg-588157 p-2 py-3 text-sm font-medium text-white outline-none focus:ring-2 focus:ring-a3b18a focus:ring-offset-1 disabled:bg-gray-400'
                       >
-                        Continue
+                        ADD
                       </button>
                     </form>
                   </div>
@@ -270,7 +273,7 @@ const Profile = () => {
         )}
 
         {/* product detail card */}
-        {}
+
         <section className='bg-white py-11 font-poppins dark:bg-black-800'>
           <div className='max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6'>
             {userProducts.map((product) => (
