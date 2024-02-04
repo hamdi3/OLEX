@@ -24,7 +24,7 @@ const ProductDetails = () => {
   }
 
   // destructure product
-  const { title, price, description, image } = product;
+  const { name, price, description, image } = product;
   return (
     <section className='pt-[450px] md:pt-32 pb-[400px] md:pb-12 lg:py-32 h-screen flex items-center'>
       <div className='container mx-auto'>
@@ -37,7 +37,7 @@ const ProductDetails = () => {
           {/* text */}
           <div className='flex-1 text-center lg:text-left'>
             <h1 className='text-[26px] font-medium mb-2 max-w-[450px] mx-auto lg:mx-0'>
-              {title}
+              {name}
             </h1>
             <div className='text-2xl text-red-500 font-medium mb-6'>
               $ {price}
