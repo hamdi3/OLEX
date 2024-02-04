@@ -1,18 +1,16 @@
 import { useContext } from 'react';
-
 import { Link } from 'react-router-dom';
-
 import { IoMdArrowForward } from 'react-icons/io';
 import { FiTrash2 } from 'react-icons/fi';
-
 import CartItem from './CartItem';
 import { SidebarContext } from '../contexts/SidebarContext';
 import { CartContext } from '../contexts/CartContext';
 
 const Sidebar = () => {
   const { isOpen, handleClose } = useContext(SidebarContext);
-  const { cart, clearCart, itemAmount, total } = useContext(CartContext);
-
+  // const { cart, clearCart, itemAmount, total } = useContext(CartContext);
+  const { cart, clearCart, amount, total } = useContext(CartContext);
+  console.log(cart);
   return (
     <div
       className={`${
@@ -21,7 +19,7 @@ const Sidebar = () => {
     >
       <div className='flex items-center justify-between py-6 border-b'>
         <div className='uppercase text-sm font-semibold'>
-          Shopping Bag ({itemAmount})
+          Shopping Bag ({amount})
         </div>
         <div
           onClick={handleClose}
