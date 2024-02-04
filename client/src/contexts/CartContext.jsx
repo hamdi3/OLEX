@@ -1,99 +1,66 @@
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
+import cartReducer from '../reducers/cartReducer';
+import {
+  ADD_TO_CART,
+  CLEAR_CART,
+  DECREASE_AMOUNT,
+  INCREASE_AMOUNT,
+  REMOVE_ITEM,
+  UPDATE_AMOUNT,
+  UPDATE_TOTAL,
+} from '../actions/actions';
 
 export const CartContext = createContext();
-
+//  reducer state
+const initialState = {
+  cart: [],
+  total: 0,
+  amount: 0,
+};
 const CartProvider = ({ children }) => {
-  // cart state
-  const [cart, setCart] = useState([]);
-  // item amount state
-  const [itemAmount, setItemAmount] = useState(0);
-  // total price state
-  const [total, setTotal] = useState(0);
-
-  useEffect(() => {
-    const total = cart.reduce((accumulator, currentItem) => {
-      return accumulator + currentItem.price * currentItem.amount;
-    }, 0);
-    setTotal(total);
-  });
-
-  // update item amount
-  useEffect(() => {
-    if (cart) {
-      const amount = cart.reduce((accumulator, currentItem) => {
-        return accumulator + currentItem.amount;
-      }, 0);
-      setItemAmount(amount);
-    }
-  }, [cart]);
-
-  // add to cart
-  const addToCart = (product, id) => {
-    const newItem = { ...product, amount: 1 };
-    // check if the item is already in the cart
-    const cartItem = cart.find((item) => {
-      return item.id === id;
-    });
-    if (cartItem) {
-      const newCart = [...cart].map((item) => {
-        if (item.id === id) {
-          return { ...item, amount: cartItem.amount + 1 };
-        } else return item;
-      });
-      setCart(newCart);
-    } else {
-      setCart([...cart, newItem]);
-    }
-  };
-
-  // remove from cart
-  const removeFromCart = (id) => {
-    const newCart = cart.filter((item) => {
-      return item.id !== id;
-    });
-    setCart(newCart);
-  };
-
-  // cleart cart
+  // reducer state
+  const [state, dispatch] = useReducer(cartReducer, initialState);
+  // clear Cart
   const clearCart = () => {
-    setCart([]);
+    dispatch({ type: CLEAR_CART });
   };
-
-  // increase amount
+  // add to cart
+  const addToCart = (id, product) => {
+    dispatch({ type: ADD_TO_CART, payload: { id, product } });
+  };
+  //  remove item cart
+  const removeFromCart = (id) => {
+    dispatch({ type: REMOVE_ITEM, payload: id });
+  };
+  //  increase cart amount
   const increaseAmount = (id) => {
-    const cartItem = cart.find((item) => item.id === id);
-    addToCart(cartItem, id);
+    dispatch({ type: INCREASE_AMOUNT, payload: id });
   };
-
-  // decrease amount
+  // decrease cart Amount
   const decreaseAmount = (id) => {
-    const cartItem = cart.find((item) => item.id === id);
-    if (cartItem) {
-      const newCart = cart.map((item) => {
-        if (item.id === id) {
-          return { ...item, amount: cartItem.amount - 1 };
-        } else {
-          return item;
-        }
-      });
-      setCart(newCart);
-    }
-    if (cartItem.amount < 2) {
-      removeFromCart(id);
-    }
+    dispatch({ type: DECREASE_AMOUNT, payload: id });
   };
+  useEffect(() => {
+    //  calc the amount
+    const newAmount = state.cart.reduce((acc, item) => acc + item.amount, 0);
+    // calc the total in the cart
+    const newTotal = state.cart.reduce(
+      (acc, item) => acc + item.amount * item.price,
+      0
+    );
+    dispatch({ type: UPDATE_AMOUNT, payload: newAmount });
+    dispatch({ type: UPDATE_TOTAL, payload: newTotal });
+  }, [state.cart]);
 
   return (
     <CartContext.Provider
       value={{
-        cart,
+        ...state,
+        clearCart,
         addToCart,
         removeFromCart,
-        clearCart,
         increaseAmount,
         decreaseAmount,
-        itemAmount,
-        total,
       }}
     >
       {children}
