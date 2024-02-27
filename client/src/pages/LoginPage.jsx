@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Button,
   CssBaseline,
@@ -40,7 +40,7 @@ function Copyright(props) {
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { accessToken, refreshToken, storeTokens, clearTokens } = useAuth();
+  const { storeTokens } = useAuth();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -97,7 +97,6 @@ const LoginPage = () => {
             },
           }
         );
-        console.log(res.data, 'res');
 
         const { access_token, refresh_token, user_access } = res.data;
 
@@ -190,7 +189,7 @@ const LoginPage = () => {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href='/register' variant='body2'>
+                  <Link component={RouterLink} to='/register' variant='body2'>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

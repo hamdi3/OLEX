@@ -1,21 +1,45 @@
-// App.jsx
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Login, Error, Home, About, Register } from './pages';
-import { AuthProvider } from './context/AuthContext ';
-function App() {
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { SidebarProvider, CartProvider, ProductProvider } from './contexts';
+import {
+  Register,
+  About,
+  Profile,
+  Error,
+  Login,
+  ProtectedRoute,
+  ProductDetails,
+  Home,
+} from './pages';
+import { ProfileProvider } from './contexts/ProfileContext';
+const App = () => {
   return (
-    <Router>
-      <AuthProvider>
-        <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/' element={<Home />} />
-          <Route path='/about' element={<About />} />
-          <Route path='*' element={<Error />} />
-        </Routes>
-      </AuthProvider>
-    </Router>
+    <div className='overflow-hidden'>
+      <Router>
+        <AuthProvider>
+          <SidebarProvider>
+            <CartProvider>
+              <ProductProvider>
+                <ProfileProvider>
+                  <Routes>
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/register' element={<Register />} />
+                    <Route path='*' element={<Error />} />
+                    <Route path='/' element={<ProtectedRoute />}>
+                      <Route index element={<Home />} />
+                      <Route path='/profile' element={<Profile />} />
+                      <Route path='/about' element={<About />} />
+                      <Route path='product/:id' element={<ProductDetails />} />
+                    </Route>
+                  </Routes>
+                </ProfileProvider>
+              </ProductProvider>
+            </CartProvider>
+          </SidebarProvider>
+        </AuthProvider>
+      </Router>
+    </div>
   );
-}
+};
 
 export default App;
