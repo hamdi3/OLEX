@@ -3,11 +3,8 @@ import { useProducts } from '../contexts/ProductContext';
 import { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useAuth } from '../contexts/AuthContext';
-import { useProfile } from '../contexts/ProfileContext';
 
 const Profile = () => {
-  const data = useProfile();
-  console.log(data);
   //  calling products from products Context
   const { products } = useProducts();
   // calling user info from useAuth Context
@@ -67,16 +64,14 @@ const Profile = () => {
     });
   };
   //  product form submit
-  const handleSubmit = async (e) => {
+  const addProductForm = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-
     formData.append('name', productForm.name);
     formData.append('price', productForm.price);
     formData.append('description', productForm.description);
     formData.append('image', productForm.image);
     formData.append('seller', user.user_id);
-
     try {
       await axios.post(
         'http://127.0.0.1:8000/products_api/products/',
@@ -88,7 +83,6 @@ const Profile = () => {
           },
         }
       );
-      console.log('success');
     } catch (error) {
       console.log(error);
     }
@@ -98,6 +92,27 @@ const Profile = () => {
     let newProducts = products.filter((item) => item.seller === user.user_id);
     setUserProducts(newProducts);
   }, [products]);
+
+  // delete a product
+  const deleteItem = async (id) => {
+    let newItems = userProducts.filter((item) => item.id !== id);
+    setUserProducts(newItems);
+    try {
+      await axios.delete(
+        `http://127.0.0.1:8000/products_api/products/${id}`,
+
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchingUserProducts();
   }, [fetchingUserProducts]);
@@ -176,7 +191,7 @@ const Profile = () => {
 
                     <form
                       className='w-full'
-                      onSubmit={handleSubmit}
+                      onSubmit={addProductForm}
                       encType='multipart/form-data'
                     >
                       <div className='mb-4'>
@@ -320,9 +335,16 @@ const Profile = () => {
                         </button>
                       </div>
                       <div className='w-full px-4 mb-4 lg:mb-0 lg:w-1/2'>
-                        <button className='flex items-center justify-center w-full p-4 text-[#588157] border border-[#a3b18a] rounded-md dark:text-[#588157] dark:border-[#a3b18a] hover:bg-[#3A5A40] hover:border-[#dad7cd] hover:text-gray-100 dark:bg-[#3A5A40] dark:hover:bg-[#3A5A40] dark:hover:border-[#dad7cd] dark:hover:text-gray-300'>
-                          Delete
-                        </button>
+                        <form onSubmit={() => deleteItem(product)}>
+                          <button
+                            onClick={() => {
+                              deleteItem(product.id);
+                            }}
+                            className='flex items-center justify-center w-full p-4 text-[#588157] border border-[#a3b18a] rounded-md dark:text-[#588157] dark:border-[#a3b18a] hover:bg-[#3A5A40] hover:border-[#dad7cd] hover:text-gray-100 dark:bg-[#3A5A40] dark:hover:bg-[#3A5A40] dark:hover:border-[#dad7cd] dark:hover:text-gray-300'
+                          >
+                            Delete
+                          </button>
+                        </form>
                       </div>
                     </div>
                   </div>

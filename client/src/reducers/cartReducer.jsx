@@ -4,6 +4,8 @@ import {
   DECREASE_AMOUNT,
   INCREASE_AMOUNT,
   REMOVE_ITEM,
+  UPDATE_AMOUNT,
+  UPDATE_TOTAL,
 } from '../actions/actions';
 
 const cartReducer = (state, action) => {
@@ -65,11 +67,11 @@ const cartReducer = (state, action) => {
     return { ...state, cart: tempCart };
   }
   // update amount when cart changes
-  if (action.type === 'UPDATE_AMOUNT') {
+  if (action.type === UPDATE_AMOUNT) {
     return { ...state, amount: action.payload };
   }
   // update total when cart changes
-  if (action.type === 'UPDATE_TOTAL') {
+  if (action.type === UPDATE_TOTAL) {
     return { ...state, total: action.payload };
   }
 
