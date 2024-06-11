@@ -5,6 +5,9 @@ const CLEAR_CART = 'CLEAR_CART';
 const REMOVE_ITEM = 'REMOVE_ITEM';
 const UPDATE_AMOUNT = 'UPDATE_AMOUNT';
 const UPDATE_TOTAL = 'UPDATE_TOTAL';
+const ACCESS_TOKEN = 'access_token';
+const REFRESH_TOKEN = 'refresh_token';
+const USER_ACCESS = 'user_access';
 export {
   ADD_TO_CART,
   INCREASE_AMOUNT,
@@ -13,4 +16,7 @@ export {
   DECREASE_AMOUNT,
   UPDATE_AMOUNT,
   UPDATE_TOTAL,
+  ACCESS_TOKEN,
+  REFRESH_TOKEN,
+  USER_ACCESS,
 };
