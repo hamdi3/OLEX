@@ -83,6 +83,7 @@ const Profile = () => {
           },
         }
       );
+      // setNewProductPopup(false);
     } catch (error) {
       console.log(error);
     }

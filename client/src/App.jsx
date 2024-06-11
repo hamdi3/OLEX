@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { SidebarProvider, CartProvider, ProductProvider } from './contexts';
+import './App.scss';
 import {
   Register,
   About,

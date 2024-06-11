@@ -6,27 +6,25 @@ import {
   useEffect,
   useCallback,
 } from 'react';
+import { ACCESS_TOKEN, REFRESH_TOKEN, USER_ACCESS } from '../actions/actions';
 import { useNavigate } from 'react-router-dom';
 
-// creating auth Context
 const AuthContext = createContext();
-//  using Auth provider
 const AuthProvider = ({ children }) => {
-  // using navigate from react-router-dom
   const navigate = useNavigate();
   //  user login state
   const [authLogin, setAuthLogin] = useState({
-    accessToken: localStorage.getItem('access_token') || '',
-    refreshToken: localStorage.getItem('refresh_token') || '',
-    user: JSON.parse(localStorage.getItem('user_access')) || {},
+    accessToken: localStorage.getItem(ACCESS_TOKEN) || '',
+    refreshToken: localStorage.getItem(REFRESH_TOKEN) || '',
+    user: JSON.parse(localStorage.getItem(USER_ACCESS)) || {},
   });
   // storing tokens
   const storeTokens = useCallback((access, refresh, userData) => {
-    localStorage.setItem('access_token', access);
-    localStorage.setItem('refresh_token', refresh);
+    localStorage.setItem(ACCESS_TOKEN, access);
+    localStorage.setItem(REFRESH_TOKEN, refresh);
     // Ensure 'authLogIn.userData' is defined before using JSON.stringify
     if (userData) {
-      localStorage.setItem('user_access', JSON.stringify(userData));
+      localStorage.setItem(USER_ACCESS, JSON.stringify(userData));
       setAuthLogin({
         accessToken: access,
         refreshToken: refresh,
@@ -39,9 +37,9 @@ const AuthProvider = ({ children }) => {
   }, []);
   // clearing tokens
   const clearTokens = useCallback(() => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user_access');
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
+    localStorage.removeItem(USER_ACCESS);
     navigate('/login');
   }, [navigate]);
   // token interval
@@ -59,7 +57,7 @@ const AuthProvider = ({ children }) => {
           ...prevAuthLogin,
           accessToken: access_token,
         }));
-        localStorage.setItem('access_token', access_token);
+        localStorage.setItem(ACCESS_TOKEN, access_token);
         console.log('new access');
         if (response.status !== 200) {
           clearTokens();
